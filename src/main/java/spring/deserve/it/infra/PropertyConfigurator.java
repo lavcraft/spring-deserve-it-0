@@ -2,6 +2,7 @@ package spring.deserve.it.infra;
 
 import org.reflections.ReflectionUtils;
 import spring.deserve.it.game.InjectProperty;
+import spring.deserve.it.game.ObjectConfigurator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +12,7 @@ import java.util.Set;
 
 import static org.reflections.ReflectionUtils.withAnnotation;
 
-public class PropertyConfigurator {
+public class PropertyConfigurator implements ObjectConfigurator {
 
     private final Properties properties = new Properties();
 
@@ -28,6 +29,7 @@ public class PropertyConfigurator {
         }
     }
 
+    @Override
     public void configure(Object object) {
         Class<?> clazz = object.getClass();
 
