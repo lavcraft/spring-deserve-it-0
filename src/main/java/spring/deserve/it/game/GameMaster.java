@@ -6,7 +6,7 @@ import spring.deserve.it.api.Spider;
 public class GameMaster {
 
     @Inject
-    private StoneSpider spider1 ;
+    private ScissorsSpider spider1 ;
     @Inject
     private StatisticalSpider spider2 ;
 
