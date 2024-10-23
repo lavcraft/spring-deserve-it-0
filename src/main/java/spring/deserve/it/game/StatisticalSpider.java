@@ -1,13 +1,23 @@
 package spring.deserve.it.game;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 import spring.deserve.it.api.RPSEnum;
 import spring.deserve.it.api.Spider;
 
+
 public class StatisticalSpider extends AbstractSpider {
+
 
     @Inject
     private HistoricalService historicalService;
+
+
+
+    public StatisticalSpider(){
+        System.out.println(System.nanoTime()+" "+this.getLives());
+    }
+
 
     @Override
     public RPSEnum fight(Spider opponent, int battleId) {
