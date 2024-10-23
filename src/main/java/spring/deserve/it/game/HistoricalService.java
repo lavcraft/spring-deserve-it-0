@@ -64,6 +64,7 @@ public class HistoricalService  {
     private final Map<Integer, List<Move>> battleHistory = new HashMap<>();
 
     // Сохранение истории боя и обновление статистики пауков
+    @Log("battleHistory")
     public void saveHistory(int battleId, Move move) {
         // Сохраняем ходы для данного боя
         battleHistory.computeIfAbsent(battleId, id -> new ArrayList<>()).add(move);

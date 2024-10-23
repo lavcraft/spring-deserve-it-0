@@ -14,7 +14,8 @@ public class StatisticalSpider extends AbstractSpider {
 
 
 
-    public StatisticalSpider(){
+    @PostConstruct
+    public void init(){
         System.out.println(System.nanoTime()+" "+this.getLives());
     }
 

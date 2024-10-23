@@ -1,8 +1,10 @@
 package spring.deserve.it.game;
 
+import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
-import org.reflections.Reflections;
+import org.reflections.*;
 
+import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,6 +25,8 @@ import org.reflections.Reflections;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.reflections.ReflectionUtils.withAnnotation;
 
 public class ObjectFactory {
 
@@ -55,6 +59,7 @@ public class ObjectFactory {
           // Передаем контекст через сеттер
             configurator.configure(obj);
         }
+        invokePostConstruct(obj);
 
         return obj;
     }
@@ -62,6 +67,18 @@ public class ObjectFactory {
     @SneakyThrows
     private ObjectConfigurator createInstance(Class<? extends ObjectConfigurator> clazz) {
         return clazz.getDeclaredConstructor().newInstance();
+    }
+
+    @SneakyThrows
+    private <T> void invokePostConstruct(T obj) {
+        // Ищем все методы, помеченные @PostConstruct
+        Set<Method> postConstructMethods = ReflectionUtils.getAllMethods(obj.getClass(), withAnnotation(PostConstruct.class));
+
+        // Вызываем каждый метод
+        for (Method method : postConstructMethods) {
+            method.setAccessible(true);
+            method.invoke(obj);  // SneakyThrows обрабатывает исключения
+        }
     }
 
     // Метод для получения контекста
