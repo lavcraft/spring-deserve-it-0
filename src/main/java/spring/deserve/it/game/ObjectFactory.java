@@ -28,61 +28,84 @@ import java.util.stream.Collectors;
 
 import static org.reflections.ReflectionUtils.withAnnotation;
 
+import lombok.SneakyThrows;
+import org.reflections.ReflectionUtils;
+import spring.deserve.it.infra.ProxyConfigurator;
+
+import java.lang.reflect.Method;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.reflections.ReflectionUtils.withAnnotation;
+
 public class ObjectFactory {
 
-    // Контекст, с которым работает фабрика
     private final ApplicationContext context;
-
-    // Набор конфигураторов
     private final Set<ObjectConfigurator> configurators;
+    private final Set<ProxyConfigurator> proxyConfigurators;
 
     @SneakyThrows
     public ObjectFactory(ApplicationContext context) {
         this.context = context;
 
-        // Получаем Reflections из контекста и сканируем пакет для поиска ObjectConfigurator
         Reflections reflections = context.getReflections();
-        Set<Class<? extends ObjectConfigurator>> configuratorClasses = reflections.getSubTypesOf(ObjectConfigurator.class);
 
+        // Ищем все конфигураторы объектов
+        Set<Class<? extends ObjectConfigurator>> configuratorClasses = reflections.getSubTypesOf(ObjectConfigurator.class);
         configurators = configuratorClasses.stream()
                 .map(this::createInstance)
-                .peek(configurator -> configurator.setApplicationContext(context))
+                .collect(Collectors.toSet());
+
+        // Ищем все ProxyConfigurator
+        Set<Class<? extends ProxyConfigurator>> proxyConfiguratorClasses = reflections.getSubTypesOf(ProxyConfigurator.class);
+        proxyConfigurators = proxyConfiguratorClasses.stream()
+                .map(this::createInstance)
                 .collect(Collectors.toSet());
     }
 
     @SneakyThrows
     public <T> T createObject(Class<T> clazz) {
+        // Создаем объект через конструктор
         T obj = clazz.getDeclaredConstructor().newInstance();
 
-        // Применяем все конфигураторы, передавая им контекст
-        for (ObjectConfigurator configurator : configurators) {
-          // Передаем контекст через сеттер
-            configurator.configure(obj);
-        }
+        // Применяем конфигураторы
+        configure(obj);
+
+        // Вызов @PostConstruct перед оборачиванием в прокси
         invokePostConstruct(obj);
+
+        // Применяем прокси (если требуется)
+        obj = wrapWithProxyIfNeeded(clazz, obj);
 
         return obj;
     }
 
-    @SneakyThrows
-    private ObjectConfigurator createInstance(Class<? extends ObjectConfigurator> clazz) {
-        return clazz.getDeclaredConstructor().newInstance();
+    private <T> T wrapWithProxyIfNeeded(Class<T> clazz, T obj) {
+        for (ProxyConfigurator proxyConfigurator : proxyConfigurators) {
+            obj = proxyConfigurator.wrapWithProxy(obj, clazz);
+        }
+        return obj;
+    }
+
+    private <T> void configure(T obj) {
+        for (ObjectConfigurator configurator : configurators) {
+            configurator.setApplicationContext(context);
+            configurator.configure(obj);
+        }
     }
 
     @SneakyThrows
     private <T> void invokePostConstruct(T obj) {
-        // Ищем все методы, помеченные @PostConstruct
         Set<Method> postConstructMethods = ReflectionUtils.getAllMethods(obj.getClass(), withAnnotation(PostConstruct.class));
 
-        // Вызываем каждый метод
         for (Method method : postConstructMethods) {
             method.setAccessible(true);
-            method.invoke(obj);  // SneakyThrows обрабатывает исключения
+            method.invoke(obj);
         }
     }
 
-    // Метод для получения контекста
-    public ApplicationContext getContext() {
-        return context;
+    @SneakyThrows
+    private <T> T createInstance(Class<T> clazz) {
+        return clazz.getDeclaredConstructor().newInstance();
     }
 }

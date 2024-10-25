@@ -5,6 +5,7 @@ import spring.deserve.it.infra.Singleton;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ApplicationContext {
 
@@ -27,8 +28,20 @@ public class ApplicationContext {
     }
 
     // Метод для получения объекта из контекста
-    public <T> T getBean(Class<T> clazz) {
+    public <T> T getBean(Class<T> type) {
         // Проверяем, помечен ли класс аннотацией @Singleton
+        Class<? extends T> clazz;
+
+        if (type.isInterface()) {
+            Set<Class<? extends T>> subTypesOf = reflections.getSubTypesOf(type);
+            if (subTypesOf.isEmpty() || subTypesOf.size() > 1) {
+                throw new IllegalStateException("no impl found, or more than one for ifc "+type);
+            }
+            clazz = subTypesOf.iterator().next();
+        }else {
+            clazz= type;
+        }
+
         if (clazz.isAnnotationPresent(Singleton.class)) {
             // Если объект уже есть в кеше, возвращаем его
             if (singletonCache.containsKey(clazz)) {
