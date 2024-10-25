@@ -1,7 +1,9 @@
 package spring.deserve.it.game;
 
+import org.springframework.stereotype.Component;
 import spring.deserve.it.api.RPSEnum;
 
+@Component
 public class GameMaster {
 
     @Inject

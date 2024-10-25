@@ -1,6 +1,11 @@
 package spring.deserve.it.infra;
 
 import org.reflections.ReflectionUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import spring.deserve.it.game.InjectProperty;
 import spring.deserve.it.game.ObjectConfigurator;
 
@@ -12,21 +17,17 @@ import java.util.Set;
 
 import static org.reflections.ReflectionUtils.withAnnotation;
 
-public class PropertyConfigurator implements ObjectConfigurator {
+@Component
+public class PropertyConfigurator implements ObjectConfigurator, BeanPostProcessor {
 
-    private final Properties properties = new Properties();
+   @Autowired
+   private Environment environment;
 
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 
-    public PropertyConfigurator() {
-        // Загружаем application.properties из ресурсов
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("application.properties")) {
-            if (inputStream == null) {
-                throw new RuntimeException("Файл application.properties не найден в ресурсах");
-            }
-            properties.load(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        configure(bean);
+        return bean;
     }
 
     @Override
@@ -38,7 +39,7 @@ public class PropertyConfigurator implements ObjectConfigurator {
 
         allFields.forEach(field -> {
             InjectProperty annotation = field.getAnnotation(InjectProperty.class);
-            String propertyValue = properties.getProperty(annotation.value());
+            String propertyValue = environment.getProperty(annotation.value());
             if (propertyValue != null) {
                 field.setAccessible(true);
                 try {

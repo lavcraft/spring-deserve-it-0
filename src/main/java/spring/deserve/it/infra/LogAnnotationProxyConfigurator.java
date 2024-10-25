@@ -1,6 +1,12 @@
 package spring.deserve.it.infra;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.stereotype.Component;
 import spring.deserve.it.game.Log;
 
 import java.lang.reflect.InvocationHandler;
@@ -8,11 +14,26 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 
-public class LogAnnotationProxyConfigurator implements ProxyConfigurator {
+//@Component
+public class LogAnnotationProxyConfigurator implements BeanPostProcessor {
+
+    @Autowired
+    private ConfigurableListableBeanFactory factory;
 
     @Override
     @SneakyThrows
-    public <T> T wrapWithProxy(T obj, Class<T> implClass) {
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        BeanDefinition beanDefinition = factory.getBeanDefinition(beanName);
+        if (beanDefinition.getBeanClassName() != null) {
+            Class<?> originalClass = Class.forName(beanDefinition.getBeanClassName());
+            return wrapWithProxy(bean, originalClass);
+        }
+
+        return bean;
+    }
+
+    @SneakyThrows
+    public <T> T wrapWithProxy(T obj, Class implClass) {
         // Проверяем, есть ли методы с аннотацией @Log в реализации класса
         if (Arrays.stream(implClass.getMethods()).anyMatch(this::hasLogAnnotation)) {
             // Создаем прокси-объект
