@@ -1,4 +1,4 @@
-package spring.deserve.it.infra;
+package spring.deserve.it.infra.dynamic;
 
 import lombok.SneakyThrows;
 import org.springframework.beans.BeansException;
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 import spring.deserve.it.game.Log;
+import spring.deserve.it.infra.ProxyConfigurator;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
