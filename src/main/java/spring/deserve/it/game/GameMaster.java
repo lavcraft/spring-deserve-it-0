@@ -7,7 +7,7 @@ import spring.deserve.it.api.RPSEnum;
 public class GameMaster {
 
     @Inject
-    private PaperSpider spider1 ;
+    private StoneSpider spider1 ;
     @Inject
     private StatisticalSpider spider2 ;
 

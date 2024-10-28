@@ -8,6 +8,8 @@ import spring.deserve.it.api.Spider;
 @Setter
 public abstract class AbstractSpider implements Spider {
 
+    private String owner;
+
     @InjectProperty("spider.default.lives")
     private int lives;
 

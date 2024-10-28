@@ -23,6 +23,8 @@ public class PropertyConfigurator implements ObjectConfigurator, BeanPostProcess
    @Autowired
    private Environment environment;
 
+
+
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 

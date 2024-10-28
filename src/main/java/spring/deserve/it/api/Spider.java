@@ -10,5 +10,8 @@ public interface Spider {
     void loseLife();  // Уменьшение количества жизней на 1
 
     void setLives(int lives);  // Установка количества жизней
+
+    void setOwner(String owner);
+    String getOwner();
 }
 

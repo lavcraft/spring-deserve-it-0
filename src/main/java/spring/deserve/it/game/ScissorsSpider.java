@@ -6,7 +6,8 @@ import spring.deserve.it.api.RPSEnum;
 import spring.deserve.it.api.Spider;
 
 @Component
-@Scope(scopeName = "prototype")
+//@Scope(scopeName = "prototype")
+@PlayerQualifier("Kirill")
 public class ScissorsSpider extends AbstractSpider {
     @Override
     public RPSEnum fight(Spider opponent, int battleId) {

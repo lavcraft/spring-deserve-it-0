@@ -5,6 +5,7 @@ import spring.deserve.it.api.RPSEnum;
 import spring.deserve.it.api.Spider;
 
 @Component
+@PlayerQualifier("Kirill")
 public class PaperSpider extends AbstractSpider {
 
     @Override

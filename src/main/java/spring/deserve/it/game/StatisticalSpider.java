@@ -1,11 +1,14 @@
 package spring.deserve.it.game;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import spring.deserve.it.api.RPSEnum;
 import spring.deserve.it.api.Spider;
 
 @Component
+@PlayerQualifier("Albina")
 public class StatisticalSpider extends AbstractSpider {
 
 
