@@ -25,7 +25,7 @@ public class SpyderCountEnvironmentPostProcessor implements EnvironmentPostProce
         Reflections reflections = new Reflections(application.getMainApplicationClass().getPackageName());
         Set<Class<? extends Spider>> spyderClasses = reflections.getSubTypesOf(Spider.class);
 
-        if (spyderClasses.size() > 2) {
+        if (spyderClasses.size() > 20) {
             // Если количество классов больше 5, добавляем свойство GodMod=true
             Map<String, Object> godModProps = new HashMap<>();
             godModProps.put(GOD_MOD_PROPERTY_NAME, "true");
