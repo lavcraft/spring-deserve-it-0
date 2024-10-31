@@ -1,7 +1,7 @@
 package spring.deserve.it.game;
 
 import org.reflections.Reflections;
-import spring.deserve.it.infra.Singleton;
+import org.supercompany.core.Singleton;
 
 import java.util.HashMap;
 import java.util.Map;

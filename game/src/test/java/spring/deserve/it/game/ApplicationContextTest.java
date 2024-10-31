@@ -1,7 +1,7 @@
 package spring.deserve.it.game;
 
 import org.junit.jupiter.api.Test;
-import spring.deserve.it.infra.Singleton;
+import org.supercompany.core.Singleton;
 
 import static org.junit.jupiter.api.Assertions.*;
 

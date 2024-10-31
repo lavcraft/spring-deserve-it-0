@@ -7,7 +7,7 @@ import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import spring.deserve.it.game.ApplicationContext;
 import spring.deserve.it.game.Log;
-import spring.deserve.it.infra.Singleton;
+import org.supercompany.core.Singleton;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

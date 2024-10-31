@@ -45,7 +45,6 @@ public class ConditionalOnOnlySpider implements ConfigurationCondition {
         }
 
         // Сравниваем квалифаер с текущим именем игрока
-        System.out.println(" &^&^&^&^&^ "+beanDefinition.getBeanClassName()+ " "+annotation.value()+ " =? "+playerName );
         return annotation.value().equals(playerName);
     }
 }
