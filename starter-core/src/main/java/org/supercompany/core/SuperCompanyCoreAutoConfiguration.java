@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 @AutoConfiguration
-@Import(SingletonDogImportSelector.class)
+@Import({SingletonDogImportSelector.class, DemoRegistrar.class})
 public class SuperCompanyCoreAutoConfiguration {
     @Bean
     public String superCompanyCoreVersion() {
