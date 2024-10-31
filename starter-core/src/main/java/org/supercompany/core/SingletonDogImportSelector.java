@@ -62,7 +62,8 @@ public class SingletonDogImportSelector implements ImportBeanDefinitionRegistrar
             // 2. Если свойства нет, находим главный конфигурационный класс
             String mainConfigClass = findMainConfigClass(registry);
             if (mainConfigClass == null) {
-                throw new IllegalStateException("Центральная конфигурация с аннотацией @SpringBootApplication не найдена.");
+                return;
+//                throw new IllegalStateException("Центральная конфигурация с аннотацией @SpringBootApplication не найдена.");
             }
 
             // Добавляем пакет главной конфигурации

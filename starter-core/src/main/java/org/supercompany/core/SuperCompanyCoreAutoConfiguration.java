@@ -13,4 +13,9 @@ public class SuperCompanyCoreAutoConfiguration {
     }
 
 
+    @Bean
+    public BenchmarkBPP benchmarkBpp() {
+        return new BenchmarkBPP();
+    }
+
 }
