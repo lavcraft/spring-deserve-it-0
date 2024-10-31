@@ -20,6 +20,11 @@
             <artifactId>starter-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>spring.deserve.it</groupId>
+            <artifactId>starter-spyder</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

@@ -4,8 +4,9 @@ import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import spring.deserve.it.api.RPSEnum;
-import spring.deserve.it.api.Spider;
+import org.supercompany.core.Benchmark;
+import org.supercompany.spyders.api.RPSEnum;
+import org.supercompany.spyders.api.Spider;
 
 @Component
 @Scope(ConfigurableListableBeanFactory.SCOPE_PROTOTYPE)
@@ -14,6 +15,7 @@ public class StoneSpider extends AbstractSpider {
 
 
     @Override
+    @Benchmark
     public RPSEnum fight(Spider opponent, int battleId) {
         return RPSEnum.ROCK;
     }

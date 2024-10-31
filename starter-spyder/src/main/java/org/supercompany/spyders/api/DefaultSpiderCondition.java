@@ -1,4 +1,4 @@
-package spring.deserve.it.api;
+package org.supercompany.spyders.api;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;

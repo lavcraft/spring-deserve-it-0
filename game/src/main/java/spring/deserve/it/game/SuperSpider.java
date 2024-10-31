@@ -1,9 +1,8 @@
 package spring.deserve.it.game;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-import spring.deserve.it.api.RPSEnum;
-import spring.deserve.it.api.Spider;
+import org.supercompany.spyders.api.RPSEnum;
+import org.supercompany.spyders.api.Spider;
 
 @Component
 @DefaultSpider

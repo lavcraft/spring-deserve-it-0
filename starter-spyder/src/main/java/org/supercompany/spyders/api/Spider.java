@@ -1,4 +1,4 @@
-package spring.deserve.it.api;
+package org.supercompany.spyders.api;
 
 public interface Spider {
     RPSEnum fight(Spider opponent, int battleId);  // Метод для боя (камень, ножницы, бумага)

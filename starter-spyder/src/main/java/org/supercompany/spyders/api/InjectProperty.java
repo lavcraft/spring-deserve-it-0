@@ -1,4 +1,4 @@
-package spring.deserve.it.api;
+package org.supercompany.spyders.api;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

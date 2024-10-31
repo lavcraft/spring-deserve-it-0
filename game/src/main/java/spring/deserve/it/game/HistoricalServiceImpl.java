@@ -4,8 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
-import spring.deserve.it.api.RPSEnum;
-import org.supercompany.core.Singleton;
+import org.supercompany.spyders.api.RPSEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;

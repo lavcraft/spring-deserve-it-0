@@ -37,7 +37,6 @@ public class SingletonDogImportSelector implements ImportBeanDefinitionRegistrar
 
     private Environment env;
 
-    @Autowired
     public SingletonDogImportSelector(Environment environment) {
         this.env = environment;
     }

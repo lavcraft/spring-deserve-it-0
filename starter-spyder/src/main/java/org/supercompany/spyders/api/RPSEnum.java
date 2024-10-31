@@ -1,4 +1,4 @@
-package spring.deserve.it.api;
+package org.supercompany.spyders.api;
 
 public enum RPSEnum {
     ROCK,

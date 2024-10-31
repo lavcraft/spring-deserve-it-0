@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import spring.deserve.it.api.Spider;
-import spring.deserve.it.game.GameMaster;
-import spring.deserve.it.game.GameMasterNew;
+import org.supercompany.spyders.api.Spider;
+import spring.deserve.it.game.GameMasterNew
+        ;
 
 import java.util.List;
 import java.util.Map;

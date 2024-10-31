@@ -2,7 +2,6 @@ package spring.deserve.it.infra.aop;
 
 import org.springframework.aop.ClassFilter;
 import org.springframework.aop.support.DynamicMethodMatcherPointcut;
-import spring.deserve.it.api.Spider;
 import spring.deserve.it.game.AbstractSpider;
 
 import java.lang.reflect.Method;

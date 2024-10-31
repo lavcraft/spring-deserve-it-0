@@ -1,9 +1,9 @@
 package spring.deserve.it.game;
 
 import org.springframework.stereotype.Component;
-import spring.deserve.it.api.RPSEnum;
+import org.supercompany.spyders.api.RPSEnum;
 
-@Component
+//@Component
 public class GameMaster {
 
     @Inject

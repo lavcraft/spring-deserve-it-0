@@ -6,13 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import spring.deserve.it.api.InjectProperty;
+import org.supercompany.spyders.api.InjectProperty;
 import spring.deserve.it.game.ObjectConfigurator;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.Properties;
 import java.util.Set;
 
 import static org.reflections.ReflectionUtils.withAnnotation;

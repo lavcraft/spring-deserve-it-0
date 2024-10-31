@@ -1,10 +1,9 @@
 package spring.deserve.it.infra;
 
-import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
-import spring.deserve.it.api.Spider;
+import org.supercompany.spyders.api.Spider;
 import spring.deserve.it.game.PlayerQualifier;
 
 @Component

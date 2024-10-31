@@ -2,7 +2,7 @@ package spring.deserve.it.infra;
 
 
 import lombok.SneakyThrows;
-import spring.deserve.it.api.InjectProperty;
+import org.supercompany.spyders.api.InjectProperty;
 import spring.deserve.it.game.ObjectConfigurator;
 
 import java.lang.reflect.Field;
