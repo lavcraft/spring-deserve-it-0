@@ -1,6 +1,7 @@
 package org.supercompany.core;
 
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
@@ -11,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.lang.reflect.Proxy;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringJUnitConfig({
         BenchmarkAnnotationTest.Config.class,
@@ -77,6 +78,14 @@ class BenchmarkAnnotationTest {
         var bean = applicationContext.getBean("testClassBasdeOnAbstract");
 
         //expect
+//        assertThatThrownBy(
+//                () -> {
+//                    TestClassInterface a = (TestClassInterface) applicationContext.getBean("testClassBasdeOnAbstract");
+//                })
+//                .hasMessageContaining(
+//                        "class jdk.proxy2.$Proxy28 cannot be cast to class org.supercompany.core.BenchmarkAnnotationTest$TestClassInterface")
+//                .isInstanceOf(ClassCastException.class);
+
         assertThat(Proxy.isProxyClass(bean.getClass()))
                 .as("Should return java.lang proxy object. But %s", bean.getClass())
                 .isTrue();
@@ -84,5 +93,25 @@ class BenchmarkAnnotationTest {
         assertThat(bean.getClass().getInterfaces())
                 .as("Class should have interface")
                 .contains(TestClassInterface.class);
+    }
+
+    //TODO тест для воспроизведение проблемы с последнего дня с ClassCast Exception
+    // возникает из за кода вида bean.getClass().getInterfaces() т.к у нас есть суперкласс- абстрактный класс,
+    // в базовом классе нет интерфейсов, нужно либо использовать ClassUtils либо руками забрать рекурсивно по всем родителям все интерфейсы
+    @Test
+    @Disabled
+    void should_throw_cast_exception_when_no_interface_if_use_getInterfaces_on_abstract_class() {
+        //given
+        var bean = applicationContext.getBean("testClassBasdeOnAbstract");
+
+        //expect
+        assertThatThrownBy(
+                () -> {
+                    TestClassInterface a = (TestClassInterface) applicationContext.getBean("testClassBasdeOnAbstract");
+                })
+                .hasMessageContaining(
+                        "class jdk.proxy2.$Proxy28 cannot be cast to class org.supercompany.core.BenchmarkAnnotationTest$TestClassInterface")
+                .isInstanceOf(ClassCastException.class);
+
     }
 }
