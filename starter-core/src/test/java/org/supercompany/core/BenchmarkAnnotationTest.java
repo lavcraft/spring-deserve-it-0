@@ -9,8 +9,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import java.lang.reflect.Proxy;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringJUnitConfig({
         BenchmarkAnnotationTest.Config.class,
@@ -23,13 +24,29 @@ class BenchmarkAnnotationTest {
 
     public static class Config {
         @Bean
-        public TestClass testBeantestBeanTestBean() {
+        public TestClass testBeanTestBeanTestBean() {
             return new TestClass();
+        }
+
+        @Bean
+        public TestClassBasdeOnAbstract testClassBasdeOnAbstract() {
+            return new TestClassBasdeOnAbstract();
+        }
+    }
+
+    public static abstract class TestClassAbstract implements TestClassInterface {
+        @Benchmark
+        @Override
+        public void targetMethod() {
+
         }
     }
 
     public interface TestClassInterface {
         void targetMethod();
+    }
+
+    public static class TestClassBasdeOnAbstract extends TestClassAbstract {
     }
 
     public static class TestClass implements TestClassInterface {
@@ -42,11 +59,30 @@ class BenchmarkAnnotationTest {
 
     @Test
     void should_log_execution_time_on_benchmark_annotation(CapturedOutput capturedOutput) {
-        var bean = applicationContext.getBean(TestClassInterface.class);
+        //given
+        var bean = (TestClassInterface) applicationContext.getBean("testBeanTestBeanTestBean");
 
+        //when
         bean.targetMethod();
 
-        assertThat(capturedOutput.toString()).contains("invocation targetMethod time:");
+        //then
+        assertThat(capturedOutput.toString())
+                .as("Should print time after targetMethod call")
+                .contains("invocation targetMethod time:");
+    }
 
+    @Test
+    void should_cast_benchmarked_object_to_interface() {
+        //given
+        var bean = applicationContext.getBean("testClassBasdeOnAbstract");
+
+        //expect
+        assertThat(Proxy.isProxyClass(bean.getClass()))
+                .as("Should return java.lang proxy object. But %s", bean.getClass())
+                .isTrue();
+
+        assertThat(bean.getClass().getInterfaces())
+                .as("Class should have interface")
+                .contains(TestClassInterface.class);
     }
 }

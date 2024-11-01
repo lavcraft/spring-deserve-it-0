@@ -1,9 +1,9 @@
 package spring.deserve.it.game;
 
 import org.junit.jupiter.api.Test;
-import spring.deserve.it.api.InjectProperty;
-import spring.deserve.it.api.RPSEnum;
-import spring.deserve.it.api.Spider;
+import org.supercompany.spyders.api.InjectProperty;
+import org.supercompany.spyders.api.RPSEnum;
+import org.supercompany.spyders.api.Spider;
 import spring.deserve.it.infra.InjectPropertyObjectObjectConfigurator;
 
 import java.util.Properties;

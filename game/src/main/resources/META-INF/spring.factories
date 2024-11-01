@@ -1,1 +1,1 @@
-org.springframework.boot.env.EnvironmentPostProcessor=spring.deserve.it.infra.SpyderCountEnvironmentPostProcessor
+#org.springframework.boot.env.EnvironmentPostProcessor=spring.deserve.it.infra.SpyderCountEnvironmentPostProcessor
